@@ -1,0 +1,5 @@
+CREATE TABLE PAGAMENTO_DESCONTO  
+(  
+ ID int IDENTITY(1,1),  
+ NOME varchar (50)  
+);
