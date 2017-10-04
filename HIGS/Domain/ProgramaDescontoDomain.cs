@@ -4,6 +4,5 @@ namespace Domain
 {
     public class ProgramaDescontoDomain : BaseDomain<ProgramaDesconto>
     {
-
     }
 }

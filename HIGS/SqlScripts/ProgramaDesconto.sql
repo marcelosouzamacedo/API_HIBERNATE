@@ -1,5 +1,5 @@
-CREATE TABLE PAGAMENTO_DESCONTO  
+CREATE TABLE PROGRAMA_DESCONTO  
 (  
- ID int IDENTITY(1,1),  
- NOME varchar (50)  
+ Id int IDENTITY(1,1) PRIMARY KEY,  
+ Nome varchar (50)  
 );

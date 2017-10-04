@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDomain.cs" />
+    <Compile Include="ClienteDomain.cs" />
     <Compile Include="ProgramaDescontoDomain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

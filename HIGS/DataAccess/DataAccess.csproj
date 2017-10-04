@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mappings\ClienteMap.cs" />
-    <Compile Include="Mappings\ProgramaDescontoMapping.cs" />
+    <Compile Include="Mappings\ProgramaDescontoMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\DefaultRepository.cs" />
     <Compile Include="Repository\ClienteRepository.cs" />
