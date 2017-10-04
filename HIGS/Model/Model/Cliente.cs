@@ -8,11 +8,11 @@ namespace Model.Model
 {
     public class Cliente
     {
-        public int Id { get; set; }
-        public string CodIdentificadorTotvs { get; set; }
-        public string Nome { get; set; }
-        public string Cpf { get; set; }
-        public ProgramaDesconto ProgramaDesconto { get; set; }
+        public virtual int Id { get; set; }
+        public virtual string CodIdentificadorTotvs { get; set; }
+        public virtual string Nome { get; set; }
+        public virtual string Cpf { get; set; }
+        public virtual ProgramaDesconto ProgramaDesconto { get; set; }
 
     }
 }
