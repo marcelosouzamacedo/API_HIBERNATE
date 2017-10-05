@@ -30,6 +30,7 @@ namespace DataAccess
                 //.Mappings(x => x.FluentMappings.Conventions.Setup(m => m.Add(AutoImport.Never())).AddFromAssemblyOf<ProgramaDesconto>());
                 .Mappings(m => m.FluentMappings.Add<ProgramaDescontoMap>())
                 .Mappings(m => m.FluentMappings.Add<ClienteMap>());
+            
             session = cnf.BuildSessionFactory();
 
             return session;

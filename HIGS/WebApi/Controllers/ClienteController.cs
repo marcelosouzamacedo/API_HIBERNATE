@@ -6,17 +6,22 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Mvc;
+using WebApi.Models;
 
 namespace WebApi.Controllers
 {
     public class ClienteController : ApiController
     {
         private ClienteDomain _domain = new ClienteDomain();
+        private ProgramaDescontoDomain _programaDomain = new ProgramaDescontoDomain();
 
         // GET api/cliente
-        public IEnumerable<Cliente> GetClientes()
+        public JsonResult GetClientes()
         {
-            return _domain.GetAll().AsEnumerable();
+            var list = _domain.GetAll().ToList();
+
+            return new JsonResult() { Data = new { IsValid = true, List = list } };
         }
 
         // GET api/cliente/5
@@ -32,16 +37,16 @@ namespace WebApi.Controllers
         }
 
         // PUT api/cliente/5
-        public HttpResponseMessage PutCliente(int id, [FromBody]Cliente Cliente)
+        public JsonResult PutCliente(int id, [FromBody]Cliente Cliente)
         {
             if (!ModelState.IsValid)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                return new JsonResult() { Data = new { isValid = false } };
             }
 
             if (id != Cliente.Id)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return new JsonResult() { Data = new { isValid = false } };
             }
 
             try
@@ -50,28 +55,39 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+                return new JsonResult() { Data = new { isValid = false } };
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK);
+            return new JsonResult() { Data = new { isValid = true } };
         }
 
         // POST api/cliente
-        public HttpResponseMessage PostCliente(Cliente Cliente)
+        public JsonResult PostCliente(ClienteModel clienteModel)
         {
             try
             {
+                if (string.IsNullOrEmpty(clienteModel.Nome) || string.IsNullOrEmpty(clienteModel.CodIdentificadorTotvs) || clienteModel.IdProgramaDesconto == 0)
+                    return new JsonResult() { Data = new { IsValid = false, Message = "Preencha todos os campos" } };
                 if (ModelState.IsValid)
                 {
-                    _domain.Create(Cliente);
+                    Cliente model = new Cliente();
+                    model.ProgramaDesconto = _programaDomain.GetById(clienteModel.IdProgramaDesconto);
+                    model.CodIdentificadorTotvs = clienteModel.CodIdentificadorTotvs;
+                    model.Cpf = clienteModel.Cpf;
+                    model.Nome = clienteModel.Nome;
 
-                    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, Cliente);
-                    response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = Cliente.Id }));
-                    return response;
+                    _domain.Create(model);
+
+                    clienteModel.Id = model.ProgramaDesconto.Id;
+
+                    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, clienteModel);
+                    response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = clienteModel.Id }));
+
+                    return new JsonResult() { Data = new { IsValid = true } };
                 }
                 else
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                    return new JsonResult() { Data = new { IsValid = false, Message = "Ocorreu um erro." } };
                 }
             }
             catch (Exception ex)
@@ -81,12 +97,12 @@ namespace WebApi.Controllers
         }
 
         // DELETE api/cliente/5
-        public HttpResponseMessage DeleteCliente(int id)
+        public JsonResult DeleteCliente(int id)
         {
             Cliente Cliente = _domain.GetById(id);
             if (Cliente == null)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                return new JsonResult() { Data = new { isValid = false } };
             }
             try
             {
@@ -95,10 +111,10 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+                return new JsonResult() { Data = new { isValid = false } };
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, Cliente);
+            return new JsonResult() { Data = new { isValid = true } };
         }
     }
 }

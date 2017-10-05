@@ -12,7 +12,16 @@ namespace Model.Model
         public virtual string CodIdentificadorTotvs { get; set; }
         public virtual string Nome { get; set; }
         public virtual string Cpf { get; set; }
+        public virtual DateTime DataInclusao { get; set; }
         public virtual ProgramaDesconto ProgramaDesconto { get; set; }
 
+
+        public virtual string DataInclusaoFormatted
+        {
+            get
+            {
+                return DataInclusao.ToString("dd/MM/yyyy HH:mm:ss");
+            }
+        }
     }
 }

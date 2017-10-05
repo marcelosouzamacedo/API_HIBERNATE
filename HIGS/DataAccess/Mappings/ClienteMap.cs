@@ -16,6 +16,7 @@ namespace DataAccess.Mappings
             Map(c => c.CodIdentificadorTotvs).Length(4);
             Map(c => c.Cpf);
             Map(c => c.Nome).Length(30);
+            Map(c => c.DataInclusao);
             References(c => c.ProgramaDesconto, "PROGRAMA_DESCONTO_ID");
             Table("CLIENTE");
         }

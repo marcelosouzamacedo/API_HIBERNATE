@@ -12,7 +12,7 @@ namespace DataAccess.Repository
     public class DefaultRepository<T> : IDefaultRepository<T> where T : class
     {
 
-        public void Create(T model)
+        public virtual void Create(T model)
         {
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -32,7 +32,7 @@ namespace DataAccess.Repository
             }
         }
 
-        public void Update(T model)
+        public virtual void Update(T model)
         {
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -52,7 +52,7 @@ namespace DataAccess.Repository
             }
         }
 
-        public void Delete(T model)
+        public virtual void Delete(T model)
         {
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -72,7 +72,7 @@ namespace DataAccess.Repository
             }
         }
 
-        public T GetById(int id)
+        public virtual T GetById(int id)
         {
             using (ISession session = SessionFactory.OpenSession())
             {
@@ -81,7 +81,7 @@ namespace DataAccess.Repository
 
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             using (ISession session = SessionFactory.OpenSession())
             {

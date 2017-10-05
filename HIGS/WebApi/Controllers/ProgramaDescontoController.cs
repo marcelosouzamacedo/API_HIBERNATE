@@ -6,16 +6,21 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
+using System.Web.Mvc;
 
 namespace WebApi.Controllers
 {
+    [EnableCors("http://localhost:52716", "*", "*")]
     public class ProgramaDescontoController : ApiController
     {
         private ProgramaDescontoDomain _domain = new ProgramaDescontoDomain();
         // GET api/programadesconto
-        public IEnumerable<ProgramaDesconto> GetProgramaDescontos()
+        public JsonResult GetProgramaDescontos()
         {
-            return _domain.GetAll().AsEnumerable();
+            var lista = _domain.GetAll().AsEnumerable();
+
+            return new JsonResult() { Data = new { IsValid = true, List = lista } };
         }
 
         // GET api/ProgramaDesconto/5
